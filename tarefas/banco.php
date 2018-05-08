@@ -1,31 +1,27 @@
 <?php 
 	
-	$bdServidor = "localhost:3306";
-	$bdUsuario = 'root';
-	$bdSenha = 'felipe';
-	$bdBanco = 'tarefas';
+	include "conexao.php";
 
-	$conexao = mysqli_connect($bdServidor , $bdUsuario , $bdSenha , $bdBanco);
-
-	if(mysqli_connect_errno($conexao)){
-		echo "Erro com a conexão";
-		die();
-	}
-
-	function buscar_tarefas($conexao){
+	function buscar_tarefas(){
 		$sqlBusca = "select *from tarefa";
-		$resultado = mysqli_query($conexao , $sqlBusca);
-
+		$conexao = getConnection();
+		$resultado = $conexao->query($sqlBusca);
 		$tarefas = array();
 
-		while ($tarefa = mysqli_fetch_assoc($resultado)) {
+		foreach ($resultado as $var) {
+			$tarefa["nome"] = $var["nome"];
+			$tarefa["prioridade"] = $var["prioridade"];
+			$tarefa["finalizada"] = $var["finalizada"];
+			$tarefa["prazo"] = $var["prazo"];
 			$tarefas[] = $tarefa;
+			$tarefa = array();
 		}
 
 		return $tarefas;
 	}
 
-	function gravar_tarefa($conexao , $tarefa){
+	function gravar_tarefa($tarefa){
+		$conexao = getConnection();
 		$sqlGravar = "
 			INSERT INTO tarefa
 				(nome , prioridade)
@@ -34,7 +30,7 @@
 					'{$tarefa['prioridade']}'
 					);
 		";
-		mysqli_query($conexao , $sqlGravar);
+		$conexao->query($sqlGravar);
 	}
 
  ?>

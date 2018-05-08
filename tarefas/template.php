@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<?php include "tarefas.php"; ?>
 <html>
 
 	<head>
@@ -9,7 +9,7 @@
 	<body>
 		<h1>Gerenciador de Tarefas</h1>
 
-		<form method="GET">
+		<form method="POST">
 			<fieldset>
 				<legend>Nova Tarefa</legend>
 				<label>
@@ -33,7 +33,7 @@
 
 				<label>
 					Tarefa concluida
-					<input type="checkbox" name="tarefa-concluida" value=true />
+					<input type="checkbox" name="concluida" value=true />
 				</label>
 
 				<input type="submit" value="Cadastrar" />
@@ -51,10 +51,10 @@
 			<?php foreach ($lista_tarefas as $tarefa): ?>
 		 	
 			<tr>
-				<td> <?php $tarefa['nome'] ; ?>  </td>
-				<td> <?php $tarefa['prazo'] ; ?>  </td>
-				<td> <?php $tarefa['prioridade'] ; ?>  </td>
-				<td>  </td>
+				<td> <?php echo($tarefa['nome']) ; ?>  </td>
+				<td> <?php echo($tarefa['prazo']) ; ?>  </td>
+				<td> <?php echo($tarefa['prioridade']) ; ?>  </td>
+				<td> <?php echo($tarefa['finalizada']) ?> </td>
 			</tr>
 			<?php endforeach; ?>
 		</table>
